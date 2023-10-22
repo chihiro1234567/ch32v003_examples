@@ -12,7 +12,7 @@ mainループ内で、毎回ADCの変換結果のレジスタの値を参照し�
 minichlinkツールで、コンソール表示することが可能。
 
 ```bash
-> ch32v003fun/minichlink/minichlink -T
+> ../ch32v003fun/minichlink/minichlink -T
 Found WCH Link
 WCH Programmer is LinkE version 2.10
 Chip Type: 003
