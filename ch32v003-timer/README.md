@@ -1,5 +1,21 @@
 # CH32V003 Timer
 
+## How to build and execute
+
+```bash
+> make clean && make && ../ch32v003fun/minichlink/minichlink -T
+:
+TIMER2 ISR 3429655354, 0
+TIMER2 ISR 3431699596, 0
+TIMER2 ISR 3433699721, 0
+TIMER1 ISR 3435655472, 0
+TIMER2 ISR 3435699845, 0
+TIMER2 ISR 3437699970, 0
+TIMER2 ISR 3439700095, 0
+TIMER1 ISR 3441655597, 0
+:
+```
+
 CH32V003には、**Advanced-control timer**と**General-purpose timer**がそれぞれ1個ずつあり、
 独立して動作する物理的なタイマが2個あるということ。
 
