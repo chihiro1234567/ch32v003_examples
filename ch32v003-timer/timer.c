@@ -12,10 +12,12 @@ void init_timer1() {
 	TIM1->PSC = 1000-1;
 	TIM1->RPTCR = 0;
 
+	// enable TIM1 Interrupt
 	NVIC_EnableIRQ(TIM1_UP_IRQn);
 
 	TIM1->INTFR = ~TIM_FLAG_Update; // 0x0001 // 10.4.5 Interrupt Status Register (TIM1_INTFR)
 	TIM1->SWEVGR = TIM_UG;// 0x0001 // 10.4.6 Event Generation Register (TIM1_SWEVGR)
+	// 以下がないと割込みが発生しない
 	TIM1->DMAINTENR |= TIM_IT_Update; // 0x0001 // 10.4.4 DMA/Interrupt Enable Register (TIM1_DMAINTENR)
 
   // TIM1 Enable
