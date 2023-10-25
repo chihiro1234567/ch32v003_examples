@@ -1,4 +1,4 @@
-# CH32V003 Timer PWM
+# CH32V003 Timer1 PWM
 
 ## How to build and execute
 

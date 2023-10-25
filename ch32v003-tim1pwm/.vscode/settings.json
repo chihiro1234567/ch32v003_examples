@@ -3,7 +3,7 @@
     "makefile.launchConfigurations": [
         {
             "cwd": "",
-            "sbinaryPath": "pwm.elf",
+            "sbinaryPath": "tim1pwm.elf",
             "binaryArgs": []
         }
     ],
