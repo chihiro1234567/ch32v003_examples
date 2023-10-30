@@ -4,7 +4,7 @@
 			"name": "GDB Debug Target",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "uart.elf",
+			"program": "usart.elf",
 			"args": [],
 			"stopAtEntry": true,
 			"cwd": "${workspaceFolder}",

@@ -3,16 +3,13 @@
 #include "ch32v003fun.h"
 #include <stdio.h>
 
-uint32_t count;
-
 int main()
 {
 	SystemInit();
 
-
 	while(1)
 	{
-		
+		printf( "hello\n" );
 		Delay_Ms(250);
 	}
 }
