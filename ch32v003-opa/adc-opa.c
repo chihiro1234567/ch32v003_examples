@@ -14,24 +14,34 @@ void init_adc(){
 
 	// GPIO設定
 	uint8_t pin_no = 0;
-	// PD3/A4
+	// PD3/A4 (可変抵抗)
 	pin_no = 3;
+	GPIOD->CFGLR &= ~(0b111<<(4*pin_no));// analog input
+	// PD4/A7 (OPO)
+	pin_no = 4;
 	GPIOD->CFGLR &= ~(0b111<<(4*pin_no));// analog input
 	
 	// ADC設定リセット
 	RCC->APB2PRSTR |= RCC_APB2Periph_ADC1;
 	RCC->APB2PRSTR &= ~RCC_APB2Periph_ADC1;
 	
-	// ADCシーケンス
-	uint8_t adc_num = 1;
-	uint8_t adc_channel = 4;
+	// ADCシーケンス & ADCサイクル
+	uint8_t adc_num = 2; // A4, A7
 	ADC1->RSQR1 = (adc_num-1) << 20;
 	ADC1->RSQR2 = 0;
+
+	// PD3/A4 (可変抵抗) => SQ1
+	uint8_t adc_channel = 4;
 	ADC1->RSQR3 &= ~ADC_SQ1;
 	ADC1->RSQR3 |= (adc_channel<<5*0);
-
-	// ADCサイクル
 	// sampling cycle = 241 cycles => 111
+	ADC1->SAMPTR2 &= ~(0b111<<(3*adc_channel));
+	ADC1->SAMPTR2 |= 0b111<<(3*adc_channel);
+	
+	// PD4/A7 (OPO) => SQ2
+	adc_channel = 7;
+	ADC1->RSQR3 &= ~ADC_SQ2;
+	ADC1->RSQR3 |= (adc_channel<<5*1);
 	ADC1->SAMPTR2 &= ~(0b111<<(3*adc_channel));
 	ADC1->SAMPTR2 |= 0b111<<(3*adc_channel);
 	
@@ -131,8 +141,7 @@ int main(){
 	init_dma();
 
 	while(1){
-		Delay_Ms(250);
-		//printf( "%4d %4d %4d [%4ld]\n\r", adc_buffer[0], adc_buffer[1], adc_buffer[2], ADC1->RDATAR);
-		printf( "%4d [%4ld]\n\r", adc_buffer[0], ADC1->RDATAR);
+		Delay_Ms(100);
+		printf( "[VR(SQ1)]%4d, [OPO(SQ2)]%4d, [ADC1->RDATA]%4ld\n\r", adc_buffer[0], adc_buffer[1], ADC1->RDATAR);
 	}
 }
