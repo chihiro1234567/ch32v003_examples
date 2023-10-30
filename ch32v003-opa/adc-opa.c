@@ -1,7 +1,7 @@
 #include "ch32v003fun.h"
 #include <stdio.h>
 
-#define ADC_NUMCHLS 1
+#define ADC_NUMCHLS 2
 volatile uint16_t adc_buffer[ADC_NUMCHLS]={0};
 
 void init_adc(){
@@ -102,9 +102,31 @@ void DMA1_Channel1_IRQHandler(){
 	}
 }
 
+void init_opa(){
+	// OpAmp Enable
+	EXTEN->EXTEN_CTR |= EXTEN_OPA_EN;
+	
+	// default
+	// OpAmp output : PD4/A7
+	// OpAmp input- : PA1/A1
+	// OpAmp input+ : PA2/A0
+
+	// remap
+	// OpAmp output : PD4/A7
+	// OpAmp input- : PD0
+	// OpAmp input+ : PD7
+
+	// select op-amp pos pin: 0 = PA2, 1 = PD7
+	//EXTEN->EXTEN_CTR |= EXTEN_OPA_PSEL;
+
+	// select op-amp neg pin: 0 = PA1, 1 = PD0
+	//EXTEN->EXTEN_CTR |= EXTEN_OPA_NSEL;
+}
+
 int main(){
 	SystemInit();
 	
+	init_opa();
 	init_adc();
 	init_dma();
 
